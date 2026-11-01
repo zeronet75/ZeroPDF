@@ -175,6 +175,18 @@ Nota técnica: `pdf.worker.js` se carga en la propia página y pdf.js trabaja en
 hilo principal. Así se evita crear `Blob` de gran tamaño dentro de `app.asar`,
 que provocaba el cierre del proceso de renderizado en la versión empaquetada.
 
+## Descargas
+
+Los instaladores se publican en la página de versiones del repositorio:
+
+<https://github.com/zeronet75/ZeroPDF/releases>
+
+Cada versión incluye `ZeroPDF-Setup.exe` y `SHA256SUMS.txt` con su huella SHA-256.
+
+> Los binarios todavía **no están firmados digitalmente** (solicitud a SignPath
+> Foundation en trámite), así que SmartScreen puede avisar la primera vez. Cuando
+> la firma esté activa, la propia release lo indicará.
+
 ## Convertir entre PDF y Word
 
 El menú **Convertir** ofrece:
