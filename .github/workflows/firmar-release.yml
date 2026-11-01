@@ -22,6 +22,8 @@ jobs:
       # Se expone aquí para poder preguntar en los "if" si ya hay token.
       # Mientras esté vacío, el flujo publica el instalador SIN firmar.
       SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+      # Evita que electron-builder busque certificados en el runner.
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
 
     steps:
       - name: Descargar el código

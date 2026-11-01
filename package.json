@@ -11,7 +11,7 @@
     "sample": "node scripts/make-sample.js",
     "icon": "electron scripts/make-icon.js",
     "dist": "npx @electron/packager . ZeroPDF --platform=win32 --arch=x64 --out=dist --overwrite --asar --icon=assets/icon.ico --extra-resource=vendor --ignore=\"^/vendor\"",
-    "installer": "electron-builder --win nsis --x64",
+    "installer": "electron-builder --win nsis --x64 --publish never",
     "smoke": "electron . --smoke=sample.pdf --shot=smoke.png"
   },
   "dependencies": {
