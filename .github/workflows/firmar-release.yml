@@ -42,7 +42,20 @@ jobs:
         run: npm run dist
 
       - name: Generar el instalador
-        run: npm run installer
+        shell: pwsh
+        run: |
+          $log = Join-Path $env:RUNNER_TEMP 'installer.log'
+          npm run installer 2>&1 | Tee-Object -FilePath $log
+          $codigo = $LASTEXITCODE
+          if ($codigo -ne 0) {
+            # Publica las últimas líneas como anotación del flujo para poder
+            # diagnosticar sin descargar el registro completo.
+            $lineas = Get-Content $log -Tail 20 | ForEach-Object {
+              ($_ -replace '%', '%25') -replace "`r", ''
+            }
+            Write-Host ("::error title=Error al generar el instalador::" + ($lineas -join '%0A'))
+            exit $codigo
+          }
 
       - name: Subir el instalador sin firmar
         id: subir
