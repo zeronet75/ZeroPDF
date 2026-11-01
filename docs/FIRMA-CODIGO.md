@@ -113,6 +113,17 @@ Get-AuthenticodeSignature .\ZeroPDF-Setup.exe | Format-List
 # SignerCertificate.Subject debe contener "SignPath Foundation"
 ```
 
+### Mientras SignPath todavía no está configurado
+
+El flujo funciona en los dos escenarios:
+
+- Si **existe** `SIGNPATH_API_TOKEN`, firma con SignPath y publica el binario firmado.
+- Si **no existe**, se salta la firma y publica el instalador sin firmar, con una
+  nota en la release avisando de que SmartScreen puede aparecer.
+
+Así puedes crear etiquetas y releases desde ya (`v1.0.0`); cuando configures el
+token, la siguiente etiqueta (`v1.0.1`) saldrá ya firmada sin tocar nada más.
+
 ---
 
 ## 7. Firma local y huellas (sin certificado todavía)

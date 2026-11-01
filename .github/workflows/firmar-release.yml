@@ -18,6 +18,11 @@ jobs:
     # en runners alojados por GitHub (no autoalojados).
     runs-on: windows-latest
 
+    env:
+      # Se expone aquí para poder preguntar en los "if" si ya hay token.
+      # Mientras esté vacío, el flujo publica el instalador SIN firmar.
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
@@ -49,9 +54,12 @@ jobs:
           retention-days: 1
 
       - name: Firmar con SignPath
+        id: firmar
+        # Sin token todavía: se omite y se publica el binario tal cual.
+        if: env.SIGNPATH_API_TOKEN != ''
         uses: signpath/github-action-submit-signing-request@v3
         with:
-          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          api-token: ${{ env.SIGNPATH_API_TOKEN }}
           organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
           project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
           signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
@@ -60,12 +68,17 @@ jobs:
           output-artifact-directory: signed
 
       - name: Comprobar la firma
+        if: steps.firmar.outcome == 'success'
         shell: pwsh
         run: ./scripts/firmar.ps1 -Ruta signed\ZeroPDF-Setup.exe -SoloVerificar
 
       - name: Calcular la huella SHA-256
+        id: huella
         shell: pwsh
-        run: ./scripts/firmar.ps1 -Ruta signed\ZeroPDF-Setup.exe -SoloHash
+        run: |
+          $exe = if (Test-Path signed\ZeroPDF-Setup.exe) { 'signed\ZeroPDF-Setup.exe' } else { 'release\ZeroPDF-Setup.exe' }
+          ./scripts/firmar.ps1 -Ruta $exe -SoloHash
+          "carpeta=$(Split-Path $exe -Parent)" >> $env:GITHUB_OUTPUT
 
       - name: Publicar la versión
         if: startsWith(github.ref, 'refs/tags/')
@@ -73,14 +86,21 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ETIQUETA: ${{ github.ref_name }}
+          FIRMADO: ${{ steps.firmar.outcome }}
+          CARPETA: ${{ steps.huella.outputs.carpeta }}
         run: |
+          $exe = Join-Path $env:CARPETA 'ZeroPDF-Setup.exe'
+          $sumas = Join-Path $env:CARPETA 'SHA256SUMS.txt'
+
+          if ($env:FIRMADO -eq 'success') {
+            $nota = 'Compilado y firmado digitalmente con SignPath Foundation desde el código fuente de este repositorio.'
+          } else {
+            $nota = 'Compilado desde el código fuente de este repositorio. **Sin firma digital todavía** (SignPath pendiente): SmartScreen puede avisar la primera vez.'
+          }
+
           gh release view $env:ETIQUETA *> $null
           if ($LASTEXITCODE -eq 0) {
-            gh release upload $env:ETIQUETA signed/ZeroPDF-Setup.exe signed/SHA256SUMS.txt --clobber
+            gh release upload $env:ETIQUETA $exe $sumas --clobber
           } else {
-            gh release create $env:ETIQUETA `
-              signed/ZeroPDF-Setup.exe `
-              signed/SHA256SUMS.txt `
-              --title "ZeroPDF $env:ETIQUETA" `
-              --notes "Compilado y firmado desde el código fuente de este repositorio."
+            gh release create $env:ETIQUETA $exe $sumas --title "ZeroPDF $env:ETIQUETA" --notes $nota
           }
