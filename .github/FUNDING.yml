@@ -1,0 +1,12 @@
+# Botón «Patrocinar» que aparece en la cabecera del repositorio.
+# Se activa en cuanto la cuenta esté aprobada en GitHub Sponsors.
+github: zeronet75
+
+# Ko-fi: descomenta y pon tu identificador cuando tengas la página creada.
+# ko_fi: zeronet75
+
+# Otros servicios admitidos por GitHub:
+# patreon: usuario
+# open_collective: proyecto
+# liberapay: usuario
+# custom: ["https://ko-fi.com/tu-usuario", "https://ejemplo.com/donar"]

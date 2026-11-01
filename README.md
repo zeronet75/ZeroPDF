@@ -328,6 +328,17 @@ zeropdf/
   del `TJ` original; el ancho se compensa con escalado horizontal (`Tz`), que puede
   condensar ligeramente el texto si es más largo que el original.
 
+## Apoyar el proyecto
+
+ZeroPDF es gratuito y de código abierto (licencia MIT). Si te resulta útil y
+quieres apoyar su desarrollo, puedes hacer una **donación voluntaria**:
+
+- **GitHub Sponsors**: <https://github.com/sponsors/zeronet75>
+- **Ko-fi**: pendiente de publicar.
+
+Las donaciones son voluntarias y no dan derecho a soporte prioritario ni a
+funciones exclusivas: el programa completo sigue siendo libre para todos.
+
 ## Créditos
 
 Creado por **zeronet75**.
