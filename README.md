@@ -334,10 +334,12 @@ ZeroPDF es gratuito y de código abierto (licencia MIT). Si te resulta útil y
 quieres apoyar su desarrollo, puedes hacer una **donación voluntaria**:
 
 - **GitHub Sponsors**: <https://github.com/sponsors/zeronet75>
-- **Ko-fi**: pendiente de publicar.
+- **Ko-fi**: <https://ko-fi.com/zeronet75>
 
 Las donaciones son voluntarias y no dan derecho a soporte prioritario ni a
 funciones exclusivas: el programa completo sigue siendo libre para todos.
+
+[![Invítame a un café en Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/zeronet75)
 
 ## Créditos
 
