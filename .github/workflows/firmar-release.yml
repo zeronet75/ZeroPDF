@@ -110,7 +110,7 @@ jobs:
           if ($env:FIRMADO -eq 'success') {
             $nota = 'Compilado y firmado digitalmente con SignPath Foundation desde el código fuente de este repositorio.'
           } else {
-            $nota = 'Compilado desde el código fuente de este repositorio. **Sin firma digital todavía** (SignPath pendiente): SmartScreen puede avisar la primera vez.'
+            $nota = 'Compilado desde el código fuente de este repositorio. SmartScreen puede avisar porque los binarios no están firmados: «Más información → Ejecutar de todas formas».'
           }
 
           gh release view $env:ETIQUETA *> $null

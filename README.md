@@ -183,9 +183,8 @@ Los instaladores se publican en la página de versiones del repositorio:
 
 Cada versión incluye `ZeroPDF-Setup.exe` y `SHA256SUMS.txt` con su huella SHA-256.
 
-> Los binarios todavía **no están firmados digitalmente** (solicitud a SignPath
-> Foundation en trámite), así que SmartScreen puede avisar la primera vez. Cuando
-> la firma esté activa, la propia release lo indicará.
+> SmartScreen puede avisar porque los binarios no están firmados: «Más información
+> → Ejecutar de todas formas».
 
 ## Convertir entre PDF y Word
 
