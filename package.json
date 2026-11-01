@@ -71,7 +71,7 @@
       "shortcutName": "ZeroPDF",
       "uninstallDisplayName": "ZeroPDF",
       "artifactName": "ZeroPDF-Setup.${ext}",
-      "installerLanguages": ["es_ES", "en_US", "de_DE", "fr_FR", "it_IT", "zh_CN", "ja_JP", "pt_BR", "ru_RU", "ar_SA", "ko_KR", "zh_TW", "nl_NL", "pl_PL", "tr_TR", "sv_SE", "da_DK", "nb_NO", "uk_UA", "hi_IN", "vi_VN", "th_TH", "id_ID"],
+      "installerLanguages": ["es_ES", "en_US", "de_DE", "fr_FR", "it_IT", "zh_CN", "ja_JP", "pt_BR", "ru_RU", "ar_SA", "ko_KR", "zh_TW", "nl_NL", "pl_PL", "tr_TR", "sv_SE", "da_DK", "nb_NO", "uk_UA", "vi_VN", "th_TH", "id_ID"],
       "language": "1034",
       "deleteAppDataOnUninstall": false,
       "runAfterFinish": true

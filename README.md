@@ -135,6 +135,11 @@ El instalador lo construye [electron-builder](https://www.electron.build/) con l
 configuración `build` de `package.json`; `vendor/qpdf` va como recurso externo, igual
 que en la versión portable.
 
+El asistente del instalador se traduce a 22 idiomas. El hindi se omite en el
+instalador (la aplicación sí lo incluye) porque el paquete NSIS 3.0.4.1 que usa
+electron-builder trae su archivo de idioma con una comilla sin cerrar y la
+compilación falla.
+
 Nota: el ejecutable no está firmado digitalmente, así que Windows SmartScreen puede
 avisar la primera vez; hay que pulsar *Más información → Ejecutar de todas formas*.
 
