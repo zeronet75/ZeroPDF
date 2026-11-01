@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Configuración de artefacto para SignPath.
+
+  El flujo de GitHub sube el instalador con actions/upload-artifact, que lo
+  empaqueta en un ZIP; por eso el elemento raíz es <zip-file> y dentro va el
+  ejecutable que se firma con Authenticode.
+
+  El nombre debe coincidir exactamente con el que produce electron-builder
+  (build.nsis.artifactName = "ZeroPDF-Setup.${ext}").
+-->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <zip-file>
+    <pe-file path="ZeroPDF-Setup.exe">
+      <authenticode-sign/>
+    </pe-file>
+  </zip-file>
+</artifact-configuration>

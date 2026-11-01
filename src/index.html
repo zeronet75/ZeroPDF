@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file: blob: data:; script-src 'self' file: blob:; style-src 'self' 'unsafe-inline' file:; img-src 'self' file: data: blob:; font-src 'self' file: data:; worker-src 'self' blob: file:;">
+  <title>ZeroPDF</title>
+  <link rel="icon" type="image/png" href="../assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="tool-select">
+  <div id="app">
+    <header class="titlebar">
+      <div class="brand">
+        <div class="logo">Z</div>
+        <div class="brand-text">
+          <strong>ZeroPDF</strong>
+          <span>por zeronet75</span>
+        </div>
+      </div>
+
+      <div class="title-actions">
+        <button class="btn primary" data-action="open">
+          <span class="ico" data-icon="folder"></span> Abrir PDF
+        </button>
+        <button class="btn" data-action="save">
+          <span class="ico" data-icon="save"></span> Guardar copia
+        </button>
+        <button class="btn ghost" data-action="search-toggle">
+          <span class="ico" data-icon="search"></span> Buscar
+        </button>
+      </div>
+
+      <div class="doc-title" id="docTitle">Sin documento</div>
+
+      <div class="title-right">
+        <button class="icon-btn" data-action="about" data-icon="info" title="Acerca de ZeroPDF"></button>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="group">
+        <button class="tool active" data-tool="select" data-icon="cursor" title="Seleccionar (V)"></button>
+        <button class="tool" data-tool="hand" data-icon="hand" title="Mover vista (H)"></button>
+      </div>
+      <div class="sep"></div>
+      <div class="group">
+        <button class="tool" data-tool="highlight" data-icon="highlight" title="Resaltar texto"></button>
+        <button class="tool" data-tool="textedit" data-icon="edittext" title="Editar texto original (E)"></button>
+        <button class="tool" data-tool="text" data-icon="text" title="Cuadro de texto"></button>
+        <button class="tool" data-tool="note" data-icon="note" title="Nota adhesiva"></button>
+        <button class="tool" data-tool="rect" data-icon="rect" title="Rectángulo"></button>
+        <button class="tool" data-tool="ellipse" data-icon="ellipse" title="Elipse"></button>
+        <button class="tool" data-tool="ink" data-icon="pen" title="Dibujo libre"></button>
+        <button class="tool" data-tool="cover" data-icon="cover" title="Cubrir con blanco"></button>
+        <button class="tool" data-tool="redact" data-icon="redact" title="Redactar (borra el texto de la zona)"></button>
+        <button class="tool" data-tool="image" data-icon="image" title="Insertar imagen o firma"></button>
+      </div>
+      <div class="sep"></div>
+      <div class="group style-group">
+        <label class="color-wrap" title="Color de la anotación">
+          <input type="color" id="styleColor" value="#e11900">
+        </label>
+        <label class="mini-field" title="Grosor del trazo">Grosor
+          <input type="number" id="styleWidth" min="1" max="24" step="1" value="2">
+        </label>
+        <label class="mini-field" title="Tamaño del texto">Texto
+          <input type="number" id="styleFont" min="6" max="96" step="1" value="14">
+        </label>
+      </div>
+      <div class="spacer"></div>
+      <div class="group">
+        <button class="icon-btn" data-action="undo" data-icon="undo" title="Deshacer (Ctrl+Z)"></button>
+        <button class="icon-btn" data-action="redo" data-icon="redo" title="Rehacer (Ctrl+Y)"></button>
+        <button class="icon-btn danger" data-action="delete-annotation" data-icon="trash" title="Eliminar anotación seleccionada (Supr)"></button>
+      </div>
+    </div>
+
+    <div class="main">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-head">
+          <span>Páginas</span>
+          <div class="sidebar-actions">
+            <button class="icon-btn" data-action="insert-page" data-icon="plus" title="Insertar página en blanco después de la actual"></button>
+            <button class="icon-btn" data-action="merge-pdf" data-icon="merge" title="Combinar otro PDF al final"></button>
+          </div>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </aside>
+
+      <section class="viewer-wrap">
+        <div class="searchbar" id="searchbar" hidden>
+          <span class="ico" data-icon="search"></span>
+          <input id="searchInput" type="text" placeholder="Buscar en el documento…" autocomplete="off">
+          <span id="searchCount" class="search-count"></span>
+          <button class="icon-btn" data-action="search-prev" data-icon="up" title="Coincidencia anterior"></button>
+          <button class="icon-btn" data-action="search-next" data-icon="down" title="Coincidencia siguiente"></button>
+          <button class="icon-btn" data-action="search-close" data-icon="close" title="Cerrar búsqueda"></button>
+        </div>
+
+        <div class="viewer" id="viewer">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-logo">Z</div>
+            <h1>ZeroPDF</h1>
+            <p>Abre un PDF para verlo, anotarlo y editarlo.</p>
+            <button class="btn primary big" data-action="open">
+              <span class="ico" data-icon="folder"></span> Abrir PDF
+            </button>
+            <p class="hint">También puedes arrastrar un archivo PDF aquí.</p>
+            <p class="empty-credit">por zeronet75</p>
+          </div>
+        </div>
+
+        <div class="zoom-dock">
+          <button class="icon-btn" data-action="prev-page" data-icon="up" title="Página anterior"></button>
+          <input id="pageInput" class="page-input" type="number" min="1" value="1" title="Ir a página">
+          <span class="page-total" id="pageTotal">/ 0</span>
+          <button class="icon-btn" data-action="next-page" data-icon="down" title="Página siguiente"></button>
+          <span class="dock-sep"></span>
+          <button class="icon-btn" data-action="zoom-out" data-icon="minus" title="Reducir"></button>
+          <button class="zoom-label" data-action="zoom-reset" id="zoomLabel" title="Restablecer zoom">100%</button>
+          <button class="icon-btn" data-action="zoom-in" data-icon="plus" title="Ampliar"></button>
+          <button class="icon-btn" data-action="fit-width" data-icon="fit" title="Ajustar al ancho"></button>
+        </div>
+
+        <div class="statusbar">
+          <span id="statusFile">Sin documento</span>
+          <span id="statusPage">— / —</span>
+          <span id="statusZoom">100%</span>
+          <span class="credits">ZeroPDF · zeronet75</span>
+        </div>
+      </section>
+
+      <aside class="panel" id="panel">
+        <div class="panel-tabs">
+          <button class="tab active" data-tab="props">Estilo</button>
+          <button class="tab" data-tab="anns">Notas</button>
+          <button class="tab" data-tab="outline">Índice</button>
+          <button class="tab" data-tab="form">Formulario</button>
+          <button class="tab" data-tab="doc">Documento</button>
+        </div>
+        <div class="panel-body">
+          <div class="tab-pane active" data-pane="props">
+            <div class="pane-section">
+              <h3>Herramienta activa</h3>
+              <p class="tool-hint" id="toolHint">Selecciona o mueve anotaciones existentes.</p>
+            </div>
+            <div class="pane-section">
+              <h3>Apariencia</h3>
+              <label class="field">Color
+                <input type="color" id="panelColor" value="#e11900">
+              </label>
+              <label class="field">Opacidad del relleno
+                <input type="range" id="panelOpacity" min="5" max="100" value="35">
+              </label>
+              <label class="field">Grosor del trazo
+                <input type="number" id="panelWidth" min="1" max="24" value="2">
+              </label>
+              <label class="field">Tamaño de texto
+                <input type="number" id="panelFont" min="6" max="96" value="14">
+              </label>
+            </div>
+            <div class="pane-section">
+              <h3>Anotación seleccionada</h3>
+              <div id="selectedInfo" class="muted">Ninguna</div>
+              <button class="btn danger full" data-action="delete-annotation">
+                <span class="ico" data-icon="trash"></span> Eliminar anotación
+              </button>
+            </div>
+            <div class="pane-section">
+              <h3>Página actual</h3>
+              <div class="btn-row">
+                <button class="btn small" data-action="rotate-page" data-icon="rotate"> Girar 90°</button>
+                <button class="btn small" data-action="insert-page" data-icon="plus"> En blanco</button>
+              </div>
+              <button class="btn small full" data-action="merge-pdf" data-icon="merge"> Combinar otro PDF</button>
+            </div>
+          </div>
+
+          <div class="tab-pane" data-pane="anns">
+            <div class="pane-section">
+              <h3>Texto modificado</h3>
+              <div id="textEditList" class="ann-list"></div>
+            </div>
+            <div class="pane-section">
+              <h3>Anotaciones de esta página</h3>
+              <div id="annList" class="ann-list"></div>
+            </div>
+          </div>
+
+          <div class="tab-pane" data-pane="outline">
+            <div class="pane-section">
+              <h3>Marcadores</h3>
+              <div id="outlineList" class="outline-list">
+                <p class="outline-empty">Sin documento.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" data-pane="form">
+            <div class="pane-section">
+              <h3>Campos del formulario</h3>
+              <p class="muted small-text">Rellena los campos y pulsa «Guardar copia» para aplicarlos.</p>
+              <div id="formFields" class="form-fields"></div>
+            </div>
+            <div class="pane-section">
+              <h3>Aplanar</h3>
+              <p class="muted small-text">Convierte los campos rellenos en contenido fijo (ya no se podrán editar).</p>
+              <button class="btn small full" data-action="flatten-forms">Aplanar y guardar…</button>
+            </div>
+          </div>
+
+          <div class="tab-pane" data-pane="doc">
+            <div class="pane-section">
+              <h3>Metadatos</h3>
+              <label class="field">Título <input type="text" id="metaTitle"></label>
+              <label class="field">Autor <input type="text" id="metaAuthor"></label>
+              <label class="field">Asunto <input type="text" id="metaSubject"></label>
+              <label class="field">Palabras clave <input type="text" id="metaKeywords"></label>
+            </div>
+            <div class="pane-section">
+              <h3>Marca de agua</h3>
+              <label class="field">Texto <input type="text" id="watermarkText" placeholder="CONFIDENCIAL"></label>
+              <label class="check"><input type="checkbox" id="watermarkOn"> Mostrar y exportar</label>
+            </div>
+            <div class="pane-section">
+              <h3>Numeración de páginas</h3>
+              <label class="check"><input type="checkbox" id="pageNumbersOn"> Añadir al exportar</label>
+              <label class="field">Posición
+                <select id="pageNumbersPosition">
+                  <option value="bottom-center">Pie · centro</option>
+                  <option value="bottom-right">Pie · derecha</option>
+                  <option value="bottom-left">Pie · izquierda</option>
+                  <option value="top-right">Cabecera · derecha</option>
+                </select>
+              </label>
+              <label class="field">Formato
+                <input type="text" id="pageNumbersFormat" value="Página {n} de {total}">
+              </label>
+              <label class="field">Texto de cabecera
+                <input type="text" id="headerText" placeholder="{title}">
+              </label>
+              <label class="field">Texto de pie
+                <input type="text" id="footerText" placeholder="{n} / {total}">
+              </label>
+            </div>
+            <div class="pane-section">
+              <h3>Recorte de márgenes</h3>
+              <p class="muted small-text">En milímetros. Se aplica al exportar; en pantalla se muestra sombreado.</p>
+              <div class="crop-grid">
+                <label class="field">Superior <input type="number" id="cropTop" min="0" max="200" step="1" value="0"></label>
+                <label class="field">Inferior <input type="number" id="cropBottom" min="0" max="200" step="1" value="0"></label>
+                <label class="field">Izquierda <input type="number" id="cropLeft" min="0" max="200" step="1" value="0"></label>
+                <label class="field">Derecha <input type="number" id="cropRight" min="0" max="200" step="1" value="0"></label>
+              </div>
+              <div class="btn-row">
+                <button class="btn small" data-action="crop-page">Esta página</button>
+                <button class="btn small" data-action="crop-all">Todas</button>
+              </div>
+              <button class="btn small full" data-action="crop-clear">Quitar recorte</button>
+            </div>
+            <div class="pane-section">
+              <h3>Optimizar</h3>
+              <p class="muted small-text">Recomprime los flujos internos con qpdf para reducir el tamaño.</p>
+              <button class="btn small full" data-action="compress-pdf">Comprimir PDF…</button>
+            </div>
+            <div class="pane-section">
+              <h3>PDF escaneado</h3>
+              <p class="muted small-text">Reconoce el texto de la página actual con el OCR de Windows y lo hace editable.</p>
+              <button class="btn small full" data-action="ocr-page" data-icon="edittext"> Reconocer texto (OCR)</button>
+              <button class="btn small full" data-action="ocr-all"> Reconocer todas las páginas</button>
+            </div>
+            <div class="pane-section">
+              <h3>Información</h3>
+              <div id="docInfo" class="muted small-text">Sin documento.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal" id="aboutModal" hidden>
+    <div class="modal-card">
+      <div class="modal-logo">Z</div>
+      <h2>ZeroPDF <span id="aboutVersion">1.0.0</span></h2>
+      <p>Visor y editor de PDF de escritorio.</p>
+      <p class="modal-author">Desarrollado por <strong>zeronet75</strong></p>
+      <p class="muted small-text">Licencia MIT. Aplicación original e independiente; no está afiliada ni respaldada por Adobe. Renderizado con pdf.js (Apache 2.0), edición con pdf-lib (MIT) y descifrado con qpdf (Apache 2.0).</p>
+      <button class="btn primary" data-action="close-about">Cerrar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="passwordModal" hidden>
+    <div class="modal-card">
+      <div class="modal-logo">Z</div>
+      <h2>PDF protegido</h2>
+      <p id="passwordMessage">Introduce la contraseña del documento.</p>
+      <input class="modal-input" id="passwordInput" type="password" autocomplete="off" spellcheck="false">
+      <p class="modal-error" id="passwordError"></p>
+      <div class="modal-actions">
+        <button class="btn" id="passwordCancel" type="button">Cancelar</button>
+        <button class="btn primary" id="passwordOk" type="button">Abrir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="promptModal" hidden>
+    <div class="modal-card">
+      <div class="modal-logo">Z</div>
+      <h2 id="promptTitle">Título</h2>
+      <p id="promptMessage">Mensaje</p>
+      <input class="modal-input" id="promptInput" type="text" autocomplete="off" spellcheck="false">
+      <p class="modal-error" id="promptError"></p>
+      <div class="modal-actions">
+        <button class="btn" id="promptCancel" type="button">Cancelar</button>
+        <button class="btn primary" id="promptOk" type="button">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="signModal" hidden>
+    <div class="modal-card">
+      <div class="modal-logo">Z</div>
+      <h2>Dibuja tu firma</h2>
+      <p class="muted small-text">Firma con el ratón o el dedo. Se insertará en la página donde hagas clic.</p>
+      <canvas id="signCanvas" width="520" height="200"></canvas>
+      <p class="modal-error" id="signError"></p>
+      <div class="modal-actions">
+        <button class="btn" id="signClear" type="button">Limpiar</button>
+        <button class="btn" id="signCancel" type="button">Cancelar</button>
+        <button class="btn primary" id="signUse" type="button">Usar firma</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="imageInput" accept="image/png,image/jpeg" hidden>
+
+  <script src="../node_modules/pdfjs-dist/build/pdf.js"></script>
+  <script src="../node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+  <script src="../node_modules/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="i18n-langs.js"></script>
+  <script src="i18n-langs2.js"></script>
+  <script src="i18n-langs3.js"></script>
+  <script src="i18n-langs4.js"></script>
+  <script src="i18n-langs5.js"></script>
+  <script src="i18n-langs6.js"></script>
+  <script src="i18n-full1.js"></script>
+  <script src="i18n-full2.js"></script>
+  <script src="i18n-full3.js"></script>
+  <script src="i18n-full4.js"></script>
+  <script src="i18n-full5.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

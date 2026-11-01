@@ -1,0 +1,80 @@
+{
+  "name": "zeropdf",
+  "productName": "ZeroPDF",
+  "version": "1.0.0",
+  "description": "Visor y editor de PDF de escritorio, original y ligero.",
+  "author": "zeronet75",
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "sample": "node scripts/make-sample.js",
+    "icon": "electron scripts/make-icon.js",
+    "dist": "npx @electron/packager . ZeroPDF --platform=win32 --arch=x64 --out=dist --overwrite --asar --icon=assets/icon.ico --extra-resource=vendor --ignore=\"^/vendor\"",
+    "installer": "electron-builder --win nsis --x64",
+    "smoke": "electron . --smoke=sample.pdf --shot=smoke.png"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.7",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^3.11.174"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.zeronet75.zeropdf",
+    "productName": "ZeroPDF",
+    "copyright": "© 2026 zeronet75",
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "convert.js",
+      "package.json",
+      "src/**/*",
+      "assets/**/*",
+      "scripts/**/*",
+      "!vendor/**",
+      "!dist/**",
+      "!release/**"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor",
+        "to": "vendor"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "ZeroPDF-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ZeroPDF",
+      "uninstallDisplayName": "ZeroPDF",
+      "artifactName": "ZeroPDF-Setup.${ext}",
+      "installerLanguages": ["es_ES", "en_US", "de_DE", "fr_FR", "it_IT", "zh_CN", "ja_JP", "pt_BR", "ru_RU", "ar_SA", "ko_KR", "zh_TW", "nl_NL", "pl_PL", "tr_TR", "sv_SE", "da_DK", "nb_NO", "uk_UA", "hi_IN", "vi_VN", "th_TH", "id_ID"],
+      "language": "1034",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true
+    }
+  }
+}

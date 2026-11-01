@@ -1,0 +1,86 @@
+name: Compilar y firmar
+
+# Se ejecuta solo al publicar una etiqueta (v1.0.0, v1.0.1...) o a mano.
+# No se firma en cada push: SignPath tiene cuota y no tiene sentido.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write   # crear la release
+  actions: read     # descargar el artefacto que se firma
+
+jobs:
+  firmar:
+    # SignPath exige, para proyectos open source, que todo el flujo se ejecute
+    # en runners alojados por GitHub (no autoalojados).
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Empaquetar la aplicación
+        run: npm run dist
+
+      - name: Generar el instalador
+        run: npm run installer
+
+      - name: Subir el instalador sin firmar
+        id: subir
+        # v7 deja el archivo en un ZIP, que es lo que espera la configuración
+        # de artefacto (<zip-file>).
+        uses: actions/upload-artifact@v7
+        with:
+          name: instalador-sin-firmar
+          path: release/ZeroPDF-Setup.exe
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Firmar con SignPath
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          github-artifact-id: ${{ steps.subir.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+
+      - name: Comprobar la firma
+        shell: pwsh
+        run: ./scripts/firmar.ps1 -Ruta signed\ZeroPDF-Setup.exe -SoloVerificar
+
+      - name: Calcular la huella SHA-256
+        shell: pwsh
+        run: ./scripts/firmar.ps1 -Ruta signed\ZeroPDF-Setup.exe -SoloHash
+
+      - name: Publicar la versión
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ETIQUETA: ${{ github.ref_name }}
+        run: |
+          gh release view $env:ETIQUETA *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $env:ETIQUETA signed/ZeroPDF-Setup.exe signed/SHA256SUMS.txt --clobber
+          } else {
+            gh release create $env:ETIQUETA `
+              signed/ZeroPDF-Setup.exe `
+              signed/SHA256SUMS.txt `
+              --title "ZeroPDF $env:ETIQUETA" `
+              --notes "Compilado y firmado desde el código fuente de este repositorio."
+          }

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5a44"/>
+      <stop offset="0.5" stop-color="#ec2710"/>
+      <stop offset="1" stop-color="#ad1200"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.26" cy="0.16" r="0.8">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e9edf4"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e6eaf1"/>
+      <stop offset="1" stop-color="#c5ccd8"/>
+    </linearGradient>
+    <linearGradient id="z" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff3b24"/>
+      <stop offset="1" stop-color="#c81400"/>
+    </linearGradient>
+    <linearGradient id="pen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#39414d"/>
+      <stop offset="1" stop-color="#1e242c"/>
+    </linearGradient>
+    <filter id="pageShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#4a0700" flood-opacity="0.42"/>
+    </filter>
+    <filter id="penShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#3a0500" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" rx="232" fill="url(#bg)"/>
+  <rect width="1024" height="1024" rx="232" fill="url(#glow)"/>
+  <rect x="10" y="10" width="1004" height="1004" rx="224" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="8"/>
+
+  <!-- Hoja de PDF con esquina doblada -->
+  <g filter="url(#pageShadow)">
+    <path d="M292 168 H644 L772 296 V816 Q772 856 732 856 H292 Q252 856 252 816 V208 Q252 168 292 168 Z" fill="url(#page)"/>
+    <path d="M644 168 L772 296 L644 296 Z" fill="url(#fold)"/>
+    <path d="M644 168 L772 296" fill="none" stroke="#aab3c2" stroke-opacity="0.65" stroke-width="6"/>
+  </g>
+
+  <!-- Z de ZeroPDF -->
+  <path d="M352 372 H672 V448 L470 632 H672 V708 H352 V632 L554 448 H352 Z" fill="url(#z)"/>
+
+  <!-- Pluma de edición -->
+  <g transform="translate(848 536) rotate(-45)" filter="url(#penShadow)">
+    <rect x="-206" y="-30" width="196" height="60" rx="26" fill="url(#pen)"/>
+    <rect x="-168" y="-30" width="34" height="60" fill="#e11900"/>
+    <rect x="-196" y="-16" width="160" height="10" rx="5" fill="#ffffff" opacity="0.22"/>
+    <path d="M-12 -24 L38 0 L-12 24 Z" fill="#eef1f6"/>
+    <path d="M-12 -24 L-12 24 L-2 16 L-2 -16 Z" fill="#c8d0dc"/>
+  </g>
+</svg>

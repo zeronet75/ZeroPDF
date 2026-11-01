@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dist2/
+*.log
+*.png
+!assets/icon.png
+selftest.pdf
+probe.pdf
+release/
+
+signed/
