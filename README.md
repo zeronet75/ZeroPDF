@@ -15,6 +15,8 @@ iconos ni recursos.
 [Vídeo de demostración](https://www.youtube.com/watch?v=ctifdgkYg0k) ·
 [Cómo contribuir](CONTRIBUTING.md)
 
+[![ZeroPDF en AlternativeTo](https://alternativeto.net/static/badges/badge-compact-color.svg)](https://alternativeto.net/software/zeropdf/about/?utm_source=badge&utm_medium=referral)
+
 ## Funciones
 
 - Lectura de PDF con desplazamiento continuo, miniaturas y zoom (25 %–500 %).
