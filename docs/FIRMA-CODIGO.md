@@ -185,3 +185,23 @@ Se firma el **instalador**. El `ZeroPDF.exe` que queda dentro de
 instalador descargado, así que no afecta a la experiencia normal. Si más adelante
 quieres firmarlo también, hay que firmarlo **antes** de empaquetar y añadir un
 paso al flujo.
+
+---
+
+## Estado de la firma (noviembre de 2026)
+
+- **SignPath Foundation**: solicitud **rechazada** por falta de tracción pública
+  (estrellas, descargas, menciones externas). Invitan a volver a solicitarla
+  cuando el proyecto tenga más visibilidad.
+- **Decisión**: no se compra certificado por ahora. Se revisará **dentro de un
+  año**, y solo si las donaciones (Ko-fi) cubren el coste.
+- **Coste de referencia**: Certum Open Source en la nube, ~49 €/año. El script
+  `scripts/firmar.ps1` ya está probado y funcionaría en cuanto haya certificado.
+- **Mientras tanto**: las releases se publican sin firmar, con su SHA-256 y el
+  aviso de SmartScreen.
+
+Requisitos para retomar el asunto:
+
+1. El proyecto acumula descargas y alguna mención externa real.
+2. Las donaciones cubren al menos el primer año de certificado.
+3. Se vuelve a probar Foundation (gratis) antes de pagar; si aceptan, mejor.
