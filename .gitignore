@@ -10,3 +10,4 @@ release/
 
 signed/
 !docs/*.png
+!docs/capturas/*.png
