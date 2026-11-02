@@ -4706,6 +4706,36 @@ function renderFormPanel() {
 
 /* -------------------------------- Guardar ------------------------------- */
 
+// Guarda sobre el propio archivo abierto. Si no hay ruta (documento nuevo o
+// abierto desde una recuperación), pide dónde guardar como una copia.
+async function saveDocument() {
+  if (!state.pages.length) {
+    toast('Abre un PDF primero.');
+    return;
+  }
+  if (!state.filePath) {
+    await saveCopy();
+    return;
+  }
+  const protegido = Array.from(state.docs.values()).some((registro) => registro && registro.wasEncrypted);
+  if (protegido && !window.confirm(tr('¿Quitar la protección al guardar?'))) {
+    return;
+  }
+  try {
+    toast('Guardando…', 1200);
+    const bytes = await buildPdf();
+    const result = await api.saveInPlace(state.filePath, bytes);
+    if (!result || !result.ok) throw new Error((result && result.error) || 'no se pudo escribir el archivo');
+    state.dirty = false;
+    updateUI();
+    await clearRecovery();
+    toast('Guardado en: ' + result.path, 4200);
+  } catch (error) {
+    console.error(error);
+    toast('No se pudo guardar: ' + error.message, 6000);
+  }
+}
+
 async function saveCopy() {
   if (!state.pages.length) {
     toast('Abre un PDF primero.');
@@ -7387,6 +7417,7 @@ function handleAction(action) {
   switch (action) {
     case 'open': openViaDialog(); break;
     case 'save': saveCopy(); break;
+    case 'save-in-place': saveDocument(); break;
     case 'print': printDocument(); break;
     case 'protect': protectDocument(); break;
     case 'extract-pages': extractPages(); break;
@@ -7600,7 +7631,11 @@ function init() {
     const ctrl = event.ctrlKey || event.metaKey;
 
     if (ctrl && event.key.toLowerCase() === 'o') { event.preventDefault(); openViaDialog(); return; }
-    if (ctrl && event.key.toLowerCase() === 's') { event.preventDefault(); saveCopy(); return; }
+    if (ctrl && event.key.toLowerCase() === 's') {
+      event.preventDefault();
+      if (event.shiftKey) saveCopy(); else saveDocument();
+      return;
+    }
     if (ctrl && event.key.toLowerCase() === 'z') {
       if (typing) return;
       event.preventDefault();

@@ -271,7 +271,8 @@ function buildMenu() {
         { label: tr('Abrir PDF…'), accelerator: 'CmdOrCtrl+O', click: () => send('open') },
         { label: tr('Abrir reciente'), submenu: recentSubmenu() },
         { type: 'separator' },
-        { label: tr('Guardar copia…'), accelerator: 'CmdOrCtrl+S', click: () => send('save') },
+        { label: tr('Guardar'), accelerator: 'CmdOrCtrl+S', click: () => send('save-in-place') },
+        { label: tr('Guardar copia…'), accelerator: 'CmdOrCtrl+Shift+S', click: () => send('save') },
         { label: tr('Imprimir…'), accelerator: 'CmdOrCtrl+P', click: () => send('print') },
         { type: 'separator' },
         { label: tr('Proteger con contraseña…'), click: () => send('protect') },
@@ -374,6 +375,18 @@ ipcMain.handle('dialog:save', async (_event, suggestedName, bytes) => {
   if (!/\.pdf$/i.test(filePath)) filePath += '.pdf';
   await fs.promises.writeFile(filePath, Buffer.from(bytes));
   return { ok: true, path: filePath };
+});
+
+// Sobrescribe el documento abierto, sin diálogo ni cambio de nombre.
+ipcMain.handle('file:save-in-place', async (_event, filePath, bytes) => {
+  if (typeof filePath !== 'string' || !filePath) return { ok: false, error: 'Ruta no válida.' };
+  if (!/\.pdf$/i.test(filePath)) return { ok: false, error: 'El archivo de destino no es un PDF.' };
+  try {
+    await fs.promises.writeFile(filePath, Buffer.from(bytes));
+    return { ok: true, path: filePath };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
 });
 
 ipcMain.handle('dialog:confirm-discard', async () => askDiscardChanges());

@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('zeropdf', {
   openDialog: () => ipcRenderer.invoke('dialog:open'),
   readFile: (filePath) => ipcRenderer.invoke('file:read', filePath),
   saveDialog: (name, bytes) => ipcRenderer.invoke('dialog:save', name, bytes),
+  saveInPlace: (filePath, bytes) => ipcRenderer.invoke('file:save-in-place', filePath, bytes),
   confirmDiscard: () => ipcRenderer.invoke('dialog:confirm-discard'),
   decryptPdf: (bytes, password) => ipcRenderer.invoke('pdf:decrypt', bytes, password),
   encryptPdf: (bytes, password) => ipcRenderer.invoke('pdf:encrypt', bytes, password),

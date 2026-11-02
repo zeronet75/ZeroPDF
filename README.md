@@ -224,7 +224,8 @@ no necesita nada externo:
 | Acción | Atajo |
 | --- | --- |
 | Abrir PDF | Ctrl+O |
-| Guardar copia | Ctrl+S |
+| Guardar | Ctrl+S |
+| Guardar copia | Ctrl+Mayús+S |
 | Imprimir | Ctrl+P |
 | Copiar texto de la página | Ctrl+C |
 | Buscar | Ctrl+F |

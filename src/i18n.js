@@ -1070,6 +1070,37 @@
     }
   });
 
+  // Textos añadidos después del diccionario base: Guardar (sobrescribir) y el
+  // aviso al guardar un PDF que venía protegido con contraseña.
+  const NUEVOS = {
+    en: { 'Guardar': 'Save', '¿Quitar la protección al guardar?': 'Remove password protection when saving?' },
+    de: { 'Guardar': 'Speichern', '¿Quitar la protección al guardar?': 'Beim Speichern den Kennwortschutz entfernen?' },
+    fr: { 'Guardar': 'Enregistrer', '¿Quitar la protección al guardar?': 'Supprimer la protection par mot de passe à l’enregistrement ?' },
+    it: { 'Guardar': 'Salva', '¿Quitar la protección al guardar?': 'Rimuovere la protezione con password al salvataggio?' },
+    zh: { 'Guardar': '保存', '¿Quitar la protección al guardar?': '保存时移除密码保护？' },
+    ja: { 'Guardar': '保存', '¿Quitar la protección al guardar?': '保存時にパスワード保護を解除しますか？' },
+    pt: { 'Guardar': 'Salvar', '¿Quitar la protección al guardar?': 'Remover a proteção por palavra-passe ao guardar?' },
+    ru: { 'Guardar': 'Сохранить', '¿Quitar la protección al guardar?': 'Снять защиту паролем при сохранении?' },
+    ar: { 'Guardar': 'حفظ', '¿Quitar la protección al guardar?': 'إزالة حماية كلمة المرور عند الحفظ؟' },
+    ko: { 'Guardar': '저장', '¿Quitar la protección al guardar?': '저장할 때 암호 보호를 제거할까요?' },
+    zhTW: { 'Guardar': '儲存', '¿Quitar la protección al guardar?': '儲存時移除密碼保護？' },
+    nl: { 'Guardar': 'Opslaan', '¿Quitar la protección al guardar?': 'Wachtwoordbeveiliging verwijderen bij opslaan?' },
+    pl: { 'Guardar': 'Zapisz', '¿Quitar la protección al guardar?': 'Usunąć ochronę hasłem przy zapisie?' },
+    tr: { 'Guardar': 'Kaydet', '¿Quitar la protección al guardar?': 'Kaydederken parola koruması kaldırılsın mı?' },
+    sv: { 'Guardar': 'Spara', '¿Quitar la protección al guardar?': 'Ta bort lösenordsskyddet vid sparning?' },
+    da: { 'Guardar': 'Gem', '¿Quitar la protección al guardar?': 'Fjern adgangskodebeskyttelsen ved lagring?' },
+    no: { 'Guardar': 'Lagre', '¿Quitar la protección al guardar?': 'Fjerne passordbeskyttelsen ved lagring?' },
+    uk: { 'Guardar': 'Зберегти', '¿Quitar la protección al guardar?': 'Зняти захист паролем під час збереження?' },
+    hi: { 'Guardar': 'सहेजें', '¿Quitar la protección al guardar?': 'सहेजते समय पासवर्ड सुरक्षा हटाएँ?' },
+    vi: { 'Guardar': 'Lưu', '¿Quitar la protección al guardar?': 'Xóa bảo vệ bằng mật khẩu khi lưu?' },
+    th: { 'Guardar': 'บันทึก', '¿Quitar la protección al guardar?': 'ลบการป้องกันด้วยรหัสผ่านเมื่อบันทึกหรือไม่' },
+    id: { 'Guardar': 'Simpan', '¿Quitar la protección al guardar?': 'Hapus perlindungan kata sandi saat menyimpan?' }
+  };
+  Object.keys(NUEVOS).forEach((code) => {
+    if (!DICTIONARIES[code]) DICTIONARIES[code] = {};
+    Object.assign(DICTIONARIES[code], NUEVOS[code]);
+  });
+
   let current = 'es';
 
   function normalize(value) {
