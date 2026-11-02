@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZeroPDF — Visor y editor de PDF para Windows</title>
-<meta name="description" content="Visor y editor de PDF gratuito y de código abierto para Windows: anota, edita el texto original, OCR, formularios, contraseña y conversión a Word. 23 idiomas.">
-<meta property="og:title" content="ZeroPDF — Visor y editor de PDF para Windows">
-<meta property="og:description" content="Gratis, de código abierto y sin cuentas. Edita el texto del PDF, aplica OCR y convierte a Word. 23 idiomas.">
+<title>ZeroPDF — PDF viewer and editor for Windows</title>
+<meta name="description" content="Free, open-source PDF viewer and editor for Windows: annotate, edit the original text, OCR, forms, password protection and PDF to Word conversion. 23 languages.">
+<meta property="og:title" content="ZeroPDF — PDF viewer and editor for Windows">
+<meta property="og:description" content="Free, open source and no accounts. Edit the PDF text in place, run offline OCR and convert to Word. 23 languages.">
 <meta property="og:image" content="captura.png">
-<link rel="icon" href="icono.png">
+<link rel="icon" href="../icono.png">
 <style>
   :root {
     --bg: #14181f;
@@ -40,7 +40,9 @@
     border-bottom: 1px solid var(--line);
     padding: 64px 0 56px;
     text-align: center;
+    position: relative;
   }
+  .lang { position: absolute; top: 16px; right: 20px; font-size: 14px; }
   .hero img.logo { width: 88px; height: 88px; border-radius: 20px; }
   h1 { font-size: 44px; line-height: 1.1; margin: 18px 0 10px; letter-spacing: -0.5px; }
   .tagline { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
@@ -79,7 +81,7 @@
   .card .ico { font-size: 20px; margin-bottom: 8px; display: block; }
 
   .langs { display: flex; flex-wrap: wrap; gap: 8px; }
-  .lang {
+  .lang-item {
     background: var(--bg-3); border: 1px solid var(--line);
     border-radius: 8px; padding: 6px 10px; font-size: 14px; color: var(--text);
   }
@@ -106,113 +108,114 @@
 <body>
 
 <header class="hero">
+  <a class="lang" href="es/">Español</a>
   <div class="wrap">
     <img class="logo" src="icono.png" alt="ZeroPDF">
     <h1>ZeroPDF</h1>
     <p class="tagline">
-      Visor y editor de PDF de escritorio para Windows. Gratis, de código abierto
-      y sin cuentas. <strong>Edita el texto del documento</strong>, no solo lo anotas.
+      Desktop PDF viewer and editor for Windows. Free, open source and no
+      accounts. <strong>Edit the document text</strong>, not just annotate it.
     </p>
     <div class="badges">
-      <span class="badge">Licencia MIT</span>
-      <span class="badge">23 idiomas</span>
-      <span class="badge">Sin telemetría</span>
-      <span class="badge">Funciona sin conexión</span>
+      <span class="badge">MIT licence</span>
+      <span class="badge">23 languages</span>
+      <span class="badge">No telemetry</span>
+      <span class="badge">Works offline</span>
     </div>
     <div class="actions">
-      <a class="btn btn-primary" href="https://github.com/zeronet75/ZeroPDF/releases/latest">Descargar para Windows</a>
-      <a class="btn btn-ghost" href="https://github.com/zeronet75/ZeroPDF">Ver el código</a>
-      <a class="btn btn-ghost" href="https://ko-fi.com/zeronet75">Apoyar el proyecto</a>
+      <a class="btn btn-primary" href="https://github.com/zeronet75/ZeroPDF/releases/latest">Download for Windows</a>
+      <a class="btn btn-ghost" href="https://github.com/zeronet75/ZeroPDF">View source</a>
+      <a class="btn btn-ghost" href="https://ko-fi.com/zeronet75">Support the project</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
 
-  <img class="shot" src="captura.png" alt="ZeroPDF con un documento abierto: miniaturas, lienzo y panel de herramientas">
+  <img class="shot" src="captura.png" alt="ZeroPDF with a document open: thumbnails, page canvas and tool panel">
 
   <section>
-    <h2>Qué hace</h2>
-    <p class="lead">Lo esencial de un editor de PDF, sin suscripciones ni límites.</p>
+    <h2>What it does</h2>
+    <p class="lead">The essentials of a PDF editor, without subscriptions or limits.</p>
     <div class="grid">
       <div class="card">
         <span class="ico">✏️</span>
-        <h3>Edición de texto real</h3>
-        <p>Localiza los operadores del PDF, borra los glifos originales y escribe con la misma fuente, tamaño, color, negrita y cursiva.</p>
+        <h3>Real text editing</h3>
+        <p>Finds the PDF text operators, removes the original glyphs and redraws with the document's own font, size, colour, bold and italic.</p>
       </div>
       <div class="card">
         <span class="ico">🖍️</span>
-        <h3>Anotaciones</h3>
-        <p>Resaltado, notas, dibujo libre, formas, imágenes y firmas dibujadas a mano.</p>
+        <h3>Annotations</h3>
+        <p>Highlights, sticky notes, freehand drawing, shapes, images and hand-drawn signatures.</p>
       </div>
       <div class="card">
         <span class="ico">🔍</span>
-        <h3>OCR sin conexión</h3>
-        <p>Convierte páginas escaneadas en texto editable y buscable con el motor OCR de Windows.</p>
+        <h3>Offline OCR</h3>
+        <p>Turns scanned pages into editable, searchable text using the Windows OCR engine.</p>
       </div>
       <div class="card">
         <span class="ico">📝</span>
-        <h3>Formularios</h3>
-        <p>Rellena campos AcroForm y aplánalos al exportar para fijar los datos.</p>
+        <h3>Forms</h3>
+        <p>Fill AcroForm fields and flatten them on export to lock the data in.</p>
       </div>
       <div class="card">
         <span class="ico">🔒</span>
-        <h3>Contraseñas y cifrado</h3>
-        <p>Abre PDF protegidos con qpdf y guarda copias cifradas con AES-256.</p>
+        <h3>Passwords and encryption</h3>
+        <p>Opens protected PDFs with qpdf and saves AES-256 encrypted copies.</p>
       </div>
       <div class="card">
         <span class="ico">🔄</span>
-        <h3>Conversión</h3>
-        <p>PDF a Word y Word a PDF (con Word, LibreOffice o el motor propio) e imagen a PDF.</p>
+        <h3>Conversion</h3>
+        <p>PDF to Word and Word to PDF (via Word, LibreOffice or the built-in engine), plus image to PDF.</p>
       </div>
       <div class="card">
         <span class="ico">📄</span>
-        <h3>Organizar páginas</h3>
-        <p>Girar, mover arrastrando miniaturas, eliminar, combinar PDF, recortar márgenes y numerar.</p>
+        <h3>Page management</h3>
+        <p>Rotate, drag thumbnails to reorder, delete, merge PDFs, crop margins and add page numbers.</p>
       </div>
       <div class="card">
         <span class="ico">🖨️</span>
-        <h3>Imprimir y exportar</h3>
-        <p>Impresión con el diálogo de Windows, exportación a PNG y copia con todos los cambios aplicados.</p>
+        <h3>Print and export</h3>
+        <p>Printing through the Windows dialog, PNG page export and a copy with every change applied.</p>
       </div>
       <div class="card">
         <span class="ico">🌍</span>
-        <h3>23 idiomas</h3>
-        <p>Español por defecto, con árabe en disposición de derecha a izquierda.</p>
+        <h3>23 languages</h3>
+        <p>English and Spanish included, plus Arabic with a right-to-left layout.</p>
       </div>
     </div>
   </section>
 
   <section>
-    <h2>Idiomas</h2>
-    <p class="lead">Toda la interfaz, los menús y los avisos están traducidos.</p>
+    <h2>Languages</h2>
+    <p class="lead">The whole interface, menus and messages are translated. English is fully supported.</p>
     <div class="langs">
-      <span class="lang">Español</span><span class="lang">English</span><span class="lang">Deutsch</span>
-      <span class="lang">Français</span><span class="lang">Italiano</span><span class="lang">中文（简体）</span>
-      <span class="lang">日本語</span><span class="lang">Português (Brasil)</span><span class="lang">Русский</span>
-      <span class="lang">العربية</span><span class="lang">한국어</span><span class="lang">中文（繁體）</span>
-      <span class="lang">Nederlands</span><span class="lang">Polski</span><span class="lang">Türkçe</span>
-      <span class="lang">Svenska</span><span class="lang">Dansk</span><span class="lang">Norsk bokmål</span>
-      <span class="lang">Українська</span><span class="lang">हिन्दी</span><span class="lang">Tiếng Việt</span>
-      <span class="lang">ไทย</span><span class="lang">Bahasa Indonesia</span>
+      <span class="lang-item">English</span><span class="lang-item">Español</span><span class="lang-item">Deutsch</span>
+      <span class="lang-item">Français</span><span class="lang-item">Italiano</span><span class="lang-item">中文（简体）</span>
+      <span class="lang-item">日本語</span><span class="lang-item">Português (Brasil)</span><span class="lang-item">Русский</span>
+      <span class="lang-item">العربية</span><span class="lang-item">한국어</span><span class="lang-item">中文（繁體）</span>
+      <span class="lang-item">Nederlands</span><span class="lang-item">Polski</span><span class="lang-item">Türkçe</span>
+      <span class="lang-item">Svenska</span><span class="lang-item">Dansk</span><span class="lang-item">Norsk bokmål</span>
+      <span class="lang-item">Українська</span><span class="lang-item">हिन्दी</span><span class="lang-item">Tiếng Việt</span>
+      <span class="lang-item">ไทย</span><span class="lang-item">Bahasa Indonesia</span>
     </div>
   </section>
 
   <section>
-    <h2>Antes de instalar</h2>
+    <h2>Before installing</h2>
     <div class="note">
-      <strong>SmartScreen puede avisar</strong> porque los binarios no están firmados
-      todavía: pulsa «Más información → Ejecutar de todas formas». Cada versión
-      publica su huella SHA-256 junto al instalador.
+      <strong>SmartScreen may warn</strong> because the binaries are not code-signed
+      yet: click “More info → Run anyway”. Every release publishes its SHA-256
+      hash next to the installer.
     </div>
   </section>
 
   <section>
-    <h2>Requisitos</h2>
+    <h2>Requirements</h2>
     <div class="grid">
-      <div class="card"><h3>Windows 10/11</h3><p>64 bits. Instalación por usuario, sin permisos de administrador.</p></div>
-      <div class="card"><h3>OCR opcional</h3><p>Usa los idiomas instalados en Windows. Funciona sin conexión.</p></div>
-      <div class="card"><h3>Sin dependencias</h3><p>Ni cuentas, ni suscripción, ni conexión a Internet para funcionar.</p></div>
+      <div class="card"><h3>Windows 10/11</h3><p>64-bit. Per-user install, no administrator rights needed.</p></div>
+      <div class="card"><h3>Optional OCR</h3><p>Uses the languages installed in Windows. Works offline.</p></div>
+      <div class="card"><h3>No dependencies</h3><p>No account, no subscription and no Internet connection required to run.</p></div>
     </div>
   </section>
 
@@ -220,10 +223,10 @@
 
 <footer>
   <div class="wrap">
-    <span>ZeroPDF · Licencia MIT · creado por zeronet75</span>
+    <span>ZeroPDF · MIT licence · by zeronet75</span>
     <span>
       <a href="https://github.com/zeronet75/ZeroPDF">GitHub</a> ·
-      <a href="https://github.com/zeronet75/ZeroPDF/releases">Descargas</a> ·
+      <a href="https://github.com/zeronet75/ZeroPDF/releases">Downloads</a> ·
       <a href="https://ko-fi.com/zeronet75">Ko-fi</a>
     </span>
   </div>
