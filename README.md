@@ -8,6 +8,12 @@ lectores de PDF (barra de herramientas, miniaturas, lienzo central y panel later
 No está afiliada, patrocinada ni respaldada por Adobe, y no utiliza sus logotipos,
 iconos ni recursos.
 
+![ZeroPDF con un documento abierto](docs/captura.png)
+
+**[Descargar la última versión](https://github.com/zeronet75/ZeroPDF/releases/latest)** ·
+[Página del proyecto](https://zeronet75.github.io/ZeroPDF/) ·
+[Cómo contribuir](CONTRIBUTING.md)
+
 ## Funciones
 
 - Lectura de PDF con desplazamiento continuo, miniaturas y zoom (25 %–500 %).
@@ -328,8 +334,21 @@ zeropdf/
   del `TJ` original; el ancho se compensa con escalado horizontal (`Tz`), que puede
   condensar ligeramente el texto si es más largo que el original.
 
-## Apoyar el proyecto
+## Contribuir
 
+Las aportaciones son bienvenidas: fallos, traducciones, documentación y mejoras.
+Las reglas están en [CONTRIBUTING.md](CONTRIBUTING.md) y el trato entre personas
+en el [código de conducta](CODE_OF_CONDUCT.md).
+
+- **¿Has encontrado un fallo?** Abre un
+  [issue](https://github.com/zeronet75/ZeroPDF/issues/new/choose) con los pasos
+  para reproducirlo.
+- **¿Quieres enviar código?** Haz un *fork*, crea una rama y abre un *pull
+  request*; la plantilla te recuerda lo básico.
+- **¿Prefieres no tocar código?** Probar con PDF problemáticos y reportar qué
+  falla ayuda igual.
+
+## Apoyar el proyecto
 ZeroPDF es gratuito y de código abierto (licencia MIT). Si te resulta útil y
 quieres apoyar su desarrollo, puedes hacer una **donación voluntaria**:
 

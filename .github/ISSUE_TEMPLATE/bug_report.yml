@@ -1,0 +1,91 @@
+name: Informar de un fallo
+description: Algo no funciona como debería
+title: "[Fallo] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por tomarte el tiempo de informar. Cuanto más concreto sea, más
+        rápido se puede arreglar.
+
+  - type: textarea
+    id: que-pasa
+    attributes:
+      label: ¿Qué ocurre?
+      description: Describe el problema en una o dos frases.
+      placeholder: Al exportar con encabezado, el texto sale cortado por la derecha.
+    validations:
+      required: true
+
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducirlo
+      description: Numera los pasos desde que abres el programa.
+      placeholder: |
+        1. Abrir un PDF de 3 páginas
+        2. Ir a Documento → Encabezado y pie
+        3. Escribir {title}
+        4. Guardar copia
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Resultado esperado
+      placeholder: El título completo aparece centrado en cada página.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Versión de ZeroPDF
+      description: Aparece en la release o en el nombre del instalador.
+      placeholder: 1.0.1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: instalacion
+    attributes:
+      label: Cómo lo ejecutas
+      options:
+        - Instalador (ZeroPDF-Setup.exe)
+        - Versión portable (dist)
+        - Desde el código (npm start)
+    validations:
+      required: true
+
+  - type: input
+    id: windows
+    attributes:
+      label: Versión de Windows
+      placeholder: Windows 11 23H2 (64 bits)
+    validations:
+      required: true
+
+  - type: textarea
+    id: pdf
+    attributes:
+      label: Documento de ejemplo
+      description: Si puedes, indica cómo es el PDF (texto, escaneado, con formularios, cifrado…). No subas documentos confidenciales.
+      placeholder: PDF de Word, 3 páginas, texto seleccionable, sin contraseña.
+
+  - type: textarea
+    id: capturas
+    attributes:
+      label: Capturas o vídeo
+      description: Arrastra aquí las imágenes. Una captura del error vale más que mil palabras.
+
+  - type: checkboxes
+    id: comprobaciones
+    attributes:
+      label: Antes de enviar
+      options:
+        - label: He buscado en los issues abiertos y no está ya reportado.
+          required: true
+        - label: Uso la última versión publicada.
+          required: true

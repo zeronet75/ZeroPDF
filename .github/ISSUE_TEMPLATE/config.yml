@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentación
+    url: https://github.com/zeronet75/ZeroPDF/blob/main/README.md
+    about: Requisitos, compilación, instalador y limitaciones conocidas.
+  - name: Descargas
+    url: https://github.com/zeronet75/ZeroPDF/releases
+    about: Instalador y huellas SHA-256 de cada versión.
+  - name: Firma de código
+    url: https://github.com/zeronet75/ZeroPDF/blob/main/docs/FIRMA-CODIGO.md
+    about: Cómo se firma el instalador y por qué SmartScreen avisa.

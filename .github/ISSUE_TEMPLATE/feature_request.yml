@@ -1,0 +1,55 @@
+name: Proponer una mejora
+description: Una idea, una función nueva o un cambio de comportamiento
+title: "[Mejora] "
+labels: ["mejora"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Las ideas son bienvenidas. Antes de escribir, comprueba que no exista ya
+        un issue parecido.
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: ¿Qué problema resuelve?
+      description: Describe la situación actual, no la solución.
+      placeholder: Al revisar un PDF escaneado tengo que corregir línea por línea porque el OCR no respeta los párrafos.
+    validations:
+      required: true
+
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Propuesta
+      description: Cómo te gustaría que funcionara.
+      placeholder: Que el OCR una líneas cercanas en un solo párrafo editable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas que has probado
+      description: Otros programas, atajos manuales, etc.
+
+  - type: dropdown
+    id: alcance
+    attributes:
+      label: ¿Te ofreces a implementarlo?
+      options:
+        - "No, solo propongo la idea"
+        - "Sí, puedo intentarlo con orientación"
+        - "Sí, tengo el cambio casi hecho"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: comprobaciones
+    attributes:
+      label: Antes de enviar
+      options:
+        - label: He buscado en los issues abiertos y no está ya propuesto.
+          required: true
+        - label: Encaja con el enfoque del proyecto (visor/editor ligero, sin cuentas ni telemetría).
+          required: true

@@ -9,3 +9,4 @@ probe.pdf
 release/
 
 signed/
+!docs/*.png
