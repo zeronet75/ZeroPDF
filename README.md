@@ -12,6 +12,7 @@ iconos ni recursos.
 
 **[Descargar la última versión](https://github.com/zeronet75/ZeroPDF/releases/latest)** ·
 [Página del proyecto](https://zeronet75.github.io/ZeroPDF/) ·
+[Vídeo de demostración](https://www.youtube.com/watch?v=ctifdgkYg0k) ·
 [Cómo contribuir](CONTRIBUTING.md)
 
 ## Funciones
