@@ -61,7 +61,12 @@ jobs:
           $intentos = 3
           $codigo = 1
           for ($i = 1; $i -le $intentos; $i++) {
-            if ($i -ge 2) { $env:ELECTRON_BUILDER_BINARIES_MIRROR = 'https://npmmirror.com/mirrors/electron-builder-binaries/' }
+            # Mismo orden de fuentes que al empaquetar, para que el instalador
+            # reutilice el Electron ya descargado en la caché del trabajo.
+            if ($i -ge 2) {
+              $env:ELECTRON_MIRROR = 'https://npmmirror.com/mirrors/electron/'
+              $env:ELECTRON_BUILDER_BINARIES_MIRROR = 'https://npmmirror.com/mirrors/electron-builder-binaries/'
+            }
             npm run installer 2>&1 | Tee-Object -FilePath $log
             $codigo = $LASTEXITCODE
             if ($codigo -eq 0) { break }
