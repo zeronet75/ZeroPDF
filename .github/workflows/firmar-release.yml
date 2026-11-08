@@ -38,15 +38,36 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
+      # GitHub a veces devuelve 504 al servir sus propias releases, y de ahí
+      # sale el ZIP de Electron. Se reintenta y, si falla dos veces seguidas,
+      # se descarga del espejo público (mismo archivo, misma versión).
       - name: Empaquetar la aplicación
-        run: npm run dist
+        shell: pwsh
+        run: |
+          $intentos = 4
+          for ($i = 1; $i -le $intentos; $i++) {
+            if ($i -ge 3) { $env:ELECTRON_MIRROR = 'https://npmmirror.com/mirrors/electron/' }
+            npm run dist
+            if ($LASTEXITCODE -eq 0) { exit 0 }
+            Write-Host "::warning::npm run dist falló (intento $i de $intentos)"
+            Start-Sleep -Seconds (15 * $i)
+          }
+          exit 1
 
       - name: Generar el instalador
         shell: pwsh
         run: |
           $log = Join-Path $env:RUNNER_TEMP 'installer.log'
-          npm run installer 2>&1 | Tee-Object -FilePath $log
-          $codigo = $LASTEXITCODE
+          $intentos = 3
+          $codigo = 1
+          for ($i = 1; $i -le $intentos; $i++) {
+            if ($i -ge 2) { $env:ELECTRON_BUILDER_BINARIES_MIRROR = 'https://npmmirror.com/mirrors/electron-builder-binaries/' }
+            npm run installer 2>&1 | Tee-Object -FilePath $log
+            $codigo = $LASTEXITCODE
+            if ($codigo -eq 0) { break }
+            Write-Host "::warning::npm run installer falló (intento $i de $intentos)"
+            Start-Sleep -Seconds (15 * $i)
+          }
           if ($codigo -ne 0) {
             # Publica las últimas líneas como anotación del flujo para poder
             # diagnosticar sin descargar el registro completo.
