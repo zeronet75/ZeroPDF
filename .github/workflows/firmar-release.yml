@@ -46,7 +46,7 @@ jobs:
         run: |
           $intentos = 4
           for ($i = 1; $i -le $intentos; $i++) {
-            if ($i -ge 3) { $env:ELECTRON_MIRROR = 'https://npmmirror.com/mirrors/electron/' }
+            if ($i -ge 2) { $env:ELECTRON_MIRROR = 'https://npmmirror.com/mirrors/electron/' }
             npm run dist
             if ($LASTEXITCODE -eq 0) { exit 0 }
             Write-Host "::warning::npm run dist falló (intento $i de $intentos)"
